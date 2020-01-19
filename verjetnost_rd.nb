@@ -1,0 +1,731 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26464,        723]
+NotebookOptionsPosition[     22091,        650]
+NotebookOutlinePosition[     22424,        665]
+CellTagsIndexPosition[     22381,        662]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Problem rojstnega dne", "Title",
+ CellChangeTimes->{{3.788329665847699*^9, 3.78832967198806*^9}, {
+  3.788338840076429*^9, 
+  3.788338842320426*^9}},ExpressionUUID->"443995c7-a510-43c0-94a1-\
+9f993b642022"],
+
+Cell["\<\
+Recimo, da me\[CHacek]emo kovanec in stavimo, na cifro. Ker je enako \
+verjetno, da pade cifra ali glava je verjetnost da pade cifra torej 50%. \
+\[CapitalCHacek]e bi vedno stavili na cifro, to pomeni, da bi \
+na\[CHacek]eloma na dolgi rok zmagali polovico metov. 
+
+Kaj pa \[CHacek]e bi kdo \[ZHacek]elel staviti na to, da imata vsaj dva v \
+razredu rojstni dan na isti dan?
+Vpra\[SHacek]anje je bolj kompleksno kot se zdi. Verjetnost, da imata vsaj \
+dva v skupini ljudi (n) je seveda odvisna od velikosti te skupine. \
+\[CapitalCHacek]e sta v skupini samo dva \[CHacek]loveka, bi bili verjetno \
+presene\[CHacek]eni, \[CHacek]e bi imela na isti dan rojstni dan. Torej kako \
+velika mora biti skupina ljudi (n), da bi verjetnost, da imata vsaj dva na \
+isti dan rojstni dan zrastla na 50%?
+
+Pri tem problemu bomo zanemarili prestopna leta. Predpostavili bomo torej, da \
+je vsako leto dolgo to\[CHacek]no 365 dni. Predpostavili bomo tudi, da je \
+vsak dan enako primeren za rojstni dan, kot ostali. 
+
+Za\[CHacek]nemo tako, da izra\[CHacek]unamo verjetnost, da imata dva \
+\[CHacek]loveka na isti dan rojstni dan. Skupina ljudi (n) bo sestavljena \
+torej iz dveh ljudi.
+Prvi \[CHacek]lovek ima lahko katerikoli rojstni dan. Ima 365 \
+mo\[ZHacek]nosti od 365 dni.
+Torej je verjetnost (365/365) kar pa je enako 1. Verjetnost, da ima drugi \
+\[CHacek]lovek na isti dan rojstni dan pa je (1/365), ker ima na voljo samo \
+en specifi\[CHacek]en dan. Da izra\[CHacek]unamo verjetnost, da imata oba \
+isti rojstni dan moramo verjetnosti med sabo pomno\[ZHacek]iti:
+\
+\>", "Text",
+ CellChangeTimes->{{3.788329678707323*^9, 3.788329683794217*^9}, {
+  3.7883297550609407`*^9, 3.788329889344819*^9}, {3.7883299502799387`*^9, 
+  3.7883303191860867`*^9}, {3.78833035992311*^9, 3.788330485630559*^9}, {
+  3.788330561100205*^9, 3.788330586284734*^9}, {3.788330645907728*^9, 
+  3.788330840474484*^9}},ExpressionUUID->"ebb92b8e-bf47-408f-8422-\
+1b5c452e3523"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"365", "/", "365"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"1", "/", "365"}], ")"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.788331275742857*^9, 3.788331307573593*^9}, 
+   3.7884283739726048`*^9},
+ CellLabel->"In[1]:=",ExpressionUUID->"6e9cd7d8-1211-4339-b231-3e608445e9fb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.7883313412086067`*^9, 3.788331352256782*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"f91dd302-0f35-40f6-908a-3a5306a9a212"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"0.274%\"\>",
+   0.0027397260273972603`,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.7883313566277313`*^9},
+ CellLabel->
+  "Out[3]//PercentForm=",ExpressionUUID->"2c4d0dfc-a202-4525-a7ff-\
+728ab3c21c9f"]
+}, Open  ]],
+
+Cell["\<\
+Verjetnost, da imata v skupini dveh naklju\[CHacek]no izbranih ljudi oba na \
+isti dan rojstni dan je torej pribli\[ZHacek]no 0.274%.
+Kaj pa \[CHacek]e so v skupini ljudi trije ljudje?
+Verjetnost, da imata prva dva rojstni dan na isti dan je torej 1/365. Lahko \
+pa imata skupni rojstni dan tudi prvi in tretji, ali pa imajo rojstni dan vsi \
+trije na isti dan. Stvari se hitro zakomplicirajo.
+
+Da bi re\[SHacek]ili problem, moramo poznati eno od osnovnih pravil \
+verjetnosti. To je, da je verjetnost vedno vrednost med 0 in 1 in da je vsota \
+verjetnosti da se dogodek zgodi in verjetnosti da se dogodek ne zgodi vedno \
+enaka 1.
+
+P(dogodek se zgodi) + P(dogodek se ne zgodi) = 1
+oziroma:
+P(imata vsaj dva skupni rd) + P(nimata niti dva) = 1
+iz tega sledi:
+P(imata vsaj dva skupni rd) = 1 - P(nimata niti dva)
+
+Kak\[SHacek]na je torej verjetnost, da nimata niti dva \[CHacek]loveka na \
+isti dan rojstni dan?
+Vemo, da ima lahko prvi rojstni dan na katerikoli dan. Drugi \[CHacek]lovek \
+pa mora imeti rojstni dan na drug dan kot prvi. Torej je opcij 364, \
+verjetnost pa 364/365. Za tretjega 363/365 in tako naprej.
+Izra\[CHacek]unamo verjetnost, da drugi in tretji nimata rojstni dan na isti \
+dan:\
+\>", "Text",
+ CellChangeTimes->{
+  3.788349947539736*^9},ExpressionUUID->"a16df5cf-7c9b-4b99-a9f2-\
+07013cc74312"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"365", "/", "365"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"364", "/", "365"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"363", "/", "365"}], ")"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.788336922138105*^9, 3.788336960843508*^9}, 
+   3.7884283812732077`*^9},
+ CellLabel->"In[2]:=",ExpressionUUID->"d8322b22-0620-4af8-b271-767595212f0d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.788336973548709*^9, 3.7883369825571003`*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"2df841ed-fac5-4af9-82e2-c8d9fcb83098"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"99.18%\"\>",
+   0.9917958341152187,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.788336984086131*^9},
+ CellLabel->
+  "Out[5]//PercentForm=",ExpressionUUID->"8ba547d0-2230-4197-8279-\
+9e4c3f61cf54"]
+}, Open  ]],
+
+Cell["\<\
+Verjetnost, da drugi in tretji nimata rojstni dan na isti dan je torej pribli\
+\[ZHacek]no 99.18%.
+Za skupino \[SHacek]tirih ljudi (n = 4) pa je verjetnost, da ni skupnih \
+rojstnih dnevov:\
+\>", "Text",
+ CellChangeTimes->{{3.7883369991607943`*^9, 
+  3.7883370730140333`*^9}},ExpressionUUID->"93b1eeeb-b034-4403-8812-\
+c264976a2bf0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"365", "/", "365"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"364", "/", "365"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"363", "/", "365"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{"362", "/", "365"}], ")"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.788337075689248*^9, 3.788337111940599*^9}, 
+   3.78842838530527*^9},
+ CellLabel->"In[3]:=",ExpressionUUID->"ed7013c4-cf25-4956-9c84-1944034198c5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.788337120499558*^9, 3.788337124793747*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"73a9c28c-ddd6-448d-bf7c-af74a2172e11"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"98.36%\"\>",
+   0.9836440875334497,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.788337127995426*^9},
+ CellLabel->
+  "Out[7]//PercentForm=",ExpressionUUID->"8ac48395-d4b7-41c4-bd2d-\
+b4acf23c5790"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Verjetnost, da v skupini \[SHacek]tirih ne bo skupnih rojstnih dnevov je \
+torej pribli\[ZHacek]no 98.36%.\n\nTako lahko nadaljujemo kakor dolgo \
+\[ZHacek]elimo. Formula za verjetnost P(n), da n ljudi ne bo imelo skupnega \
+rojstnega dneva je:\n\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{"365", " ", "-", " ", "1"}], "365"], ")"}], TraditionalForm]],
+  ExpressionUUID->"dafa3445-881c-4cb5-ad0e-ae1ca4c0f5a9"],
+ " \[Times] ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{"365", " ", "-", " ", "2"}], "365"], ")"}], TraditionalForm]],
+  ExpressionUUID->"1fdd7acd-79cc-4f97-b7e0-839ef58150a0"],
+ " \[Times] ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{"365", " ", "-", " ", "3"}], "365"], ")"}], TraditionalForm]],
+  ExpressionUUID->"bd4a328b-5c32-46e6-9a27-6cf2b6ea66c4"],
+ " \[Times] ... \[Times] ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{"365", " ", "-", " ", 
+      RowBox[{"(", 
+       RowBox[{"n", " ", "+", " ", "1"}], ")"}]}], "365"], ")"}], 
+   TraditionalForm]],ExpressionUUID->"7b346e34-8d7b-42aa-b9cd-676312baa6ec"],
+ "\n\nkar pa lahko zapi\[SHacek]emo tudi kot:\n\n",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"365", "!"}], 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"365", " ", "-", " ", "n"}], ")"}], "!"}], " ", "\[Times]", 
+     " ", 
+     SuperscriptBox["365", "n"]}]], TraditionalForm]],ExpressionUUID->
+  "4ee8fcac-0ca7-49d9-b487-cacc2227f1b7"],
+ "\n\nVerjetnost, da bo vsaj eno ujemanje pa je torej 1 - verjetnost da \
+ujemanja ne bo:\n\n1 - ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    FractionBox[
+     RowBox[{"365", "!"}], 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"365", " ", "-", " ", "n"}], ")"}], "!"}], " ", "\[Times]", 
+      " ", 
+      SuperscriptBox["365", "n"]}]], ")"}], TraditionalForm]],ExpressionUUID->
+  "1c61a667-1ceb-4ebc-b3aa-c76a35883fad"],
+ "\n\nTorej kako velika mora biti skupina (n), da bo verjetnost vsaj enega \
+skupnega rojstnega dneva 50%?\n\nVna\[SHacek]amo razli\[CHacek]ne velikosti \
+skupin ljudi oziroma n-je:\nZa skupino petih ljudi:"
+}], "Text",
+ CellChangeTimes->{{3.788337790158823*^9, 3.788337803812128*^9}, {
+  3.78833788119575*^9, 3.788337888618593*^9}, {3.788428451305632*^9, 
+  3.7884285641598682`*^9}, {3.788428614616605*^9, 
+  3.788428918150586*^9}},ExpressionUUID->"0a14d98c-620b-46b3-842b-\
+98ab2a725332"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{"1", "-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"365", "!"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"365", "-", "5"}], ")"}], "!"}], "*", 
+         RowBox[{"365", "^", "5"}]}], ")"}]}], ")"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788337820080003*^9, 3.788337849075491*^9}, 
+   3.78842838969239*^9},
+ CellLabel->"In[4]:=",ExpressionUUID->"78f3c373-c82f-49f3-9a50-6a4aed06cec7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.7883378626061497`*^9, 3.788337867624486*^9}},
+ CellLabel->"In[9]:=",ExpressionUUID->"799bd28e-8359-4294-9002-b2c8b2875c48"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"2.714%\"\>",
+   0.02713557369979359,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.78833786834238*^9},
+ CellLabel->
+  "Out[9]//PercentForm=",ExpressionUUID->"89e289d2-0404-43ac-805a-\
+49bbabb9567d"]
+}, Open  ]],
+
+Cell["\<\
+Za skupino petih je torej verjetnost, da imata vsaj dva na isti dan rojstni \
+dan pribli\[ZHacek]no 2.714%.
+Kaj pa za skupino desetih ljudi?\
+\>", "Text",
+ CellChangeTimes->{{3.788337894236031*^9, 
+  3.7883379267631207`*^9}},ExpressionUUID->"786a621a-b8f5-40f5-bf1e-\
+e4bea7f26def"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{"1", "-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"365", "!"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"365", "-", "10"}], ")"}], "!"}], "*", 
+         RowBox[{"365", "^", "10"}]}], ")"}]}], ")"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788337942546664*^9, 3.7883379456016893`*^9}, 
+   3.7884283937174387`*^9},
+ CellLabel->"In[5]:=",ExpressionUUID->"0efe2c09-cf39-401f-856b-b1622ece8cde"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.78833795180684*^9, 3.788337956587203*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"51c09cfc-410a-4e09-b151-d43dec244509"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"11.69%\"\>",
+   0.11694817771107764`,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.788337957555314*^9},
+ CellLabel->
+  "Out[11]//PercentForm=",ExpressionUUID->"9a7fbe05-e031-4f6d-846a-\
+d88afcf9533d"]
+}, Open  ]],
+
+Cell["\<\
+Za skupino desetih pa je verjetnost vsaj enega skupnega rojstnega dne \
+\[ZHacek]e 11.69%.
+Skupina dvajsetih:\
+\>", "Text",
+ CellChangeTimes->{{3.7883379641560173`*^9, 
+  3.788338014064863*^9}},ExpressionUUID->"57589c04-a834-40d2-8de0-\
+45f7b1585f46"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{"1", "-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"365", "!"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"365", "-", "20"}], ")"}], "!"}], "*", 
+         RowBox[{"365", "^", "20"}]}], ")"}]}], ")"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788338019624325*^9, 3.788338023136219*^9}, {
+  3.7884283977429953`*^9, 3.7884283989571037`*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"1f1b5f0b-397b-48fd-828d-753763b7e2ca"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.7883380359188557`*^9, 3.788338039740859*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"eb9ef76b-d11b-4e9d-b0b0-f5d86cf55073"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"41.14%\"\>",
+   0.41143838358058005`,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.788338040469659*^9},
+ CellLabel->
+  "Out[13]//PercentForm=",ExpressionUUID->"d927c538-a9d2-4a93-9b0d-\
+f8b6055a4d87"]
+}, Open  ]],
+
+Cell["\<\
+Za skupino dvajsetih verjetnost enega ujemanja zraste \[ZHacek]e na 41.14%
+50% pa postane pri 23 ljudeh.
+Poglejmo:\
+\>", "Text",
+ CellChangeTimes->{{3.788338041588201*^9, 
+  3.788338096778626*^9}},ExpressionUUID->"7a3866bc-d0fe-40b4-9cdb-\
+a0385e018624"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{"1", "-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"365", "!"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"365", "-", "23"}], ")"}], "!"}], "*", 
+         RowBox[{"365", "^", "23"}]}], ")"}]}], ")"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788338109657468*^9, 3.78833811234551*^9}, 
+   3.788428403090063*^9},
+ CellLabel->"In[7]:=",ExpressionUUID->"ff730703-b6e0-4c1a-9331-c1dcbe1eb8cb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.788338122685905*^9, 3.7883381274024277`*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"5b2052dd-6f60-4d2f-926e-c7946264e98f"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"50.73%\"\>",
+   0.5072972343239853,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.788338128843371*^9},
+ CellLabel->
+  "Out[15]//PercentForm=",ExpressionUUID->"dc56ceac-61f8-4535-b117-\
+991054a51796"]
+}, Open  ]],
+
+Cell["\<\
+Za skupino 23-ih ljudi je verjetnost, da imata vsaj dva na isti dan rojstni \
+dan pribli\[ZHacek]no 50.73%.
+
+Kaj pa recimo pri 70-ih ljudeh?\
+\>", "Text",
+ CellChangeTimes->{{3.788338134595303*^9, 
+  3.788338190588022*^9}},ExpressionUUID->"b5efe347-d17e-4845-9a43-\
+ef807cfcee79"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{"1", "-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"365", "!"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"365", "-", "70"}], ")"}], "!"}], "*", 
+         RowBox[{"365", "^", "70"}]}], ")"}]}], ")"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788338196069339*^9, 3.7883382003528643`*^9}, 
+   3.788428408099931*^9},
+ CellLabel->"In[8]:=",ExpressionUUID->"7408f15c-8d2f-409c-b865-7a67bea3d1b8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PercentForm", "[", "P", "]"}]], "Input",
+ CellChangeTimes->{{3.788338206607698*^9, 3.7883382118120127`*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"7976f0b9-1d12-4df6-8058-59e472f0b6fc"],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"99.92%\"\>",
+   0.9991595759651571,
+   AutoDelete->True],
+  PercentForm]], "Output",
+ CellChangeTimes->{3.78833821401962*^9},
+ CellLabel->
+  "Out[17]//PercentForm=",ExpressionUUID->"ec648f6c-d409-4e82-ad70-\
+57fb5d79e348"]
+}, Open  ]],
+
+Cell["Pri 70-ih ljudeh pa je verjetnost \[ZHacek]e 99.92%. Torej skoraj 1.", \
+"Text",
+ CellChangeTimes->{{3.788338216580789*^9, 
+  3.788338254589147*^9}},ExpressionUUID->"31326baf-01ed-49f5-80ac-\
+7c39a2bc1248"],
+
+Cell["\<\
+Poglejmo \[SHacek]e graf, z razli\[CHacek]nimi vrednostmi. Y os predstavlja \
+verjetnost, da imata vsaj dva v skupini na isti dan rojstni dan, X os pa \
+velikost skupine ljudi (n).\
+\>", "Text",
+ CellChangeTimes->{{3.788338594561108*^9, 3.78833860938085*^9}, {
+  3.7883398997906446`*^9, 3.788339925821883*^9}, {3.7883401095502377`*^9, 
+  3.788340121267764*^9}, {3.788340436644587*^9, 
+  3.788340471517667*^9}},ExpressionUUID->"1ccb048f-4948-4f5e-9a42-\
+8b5f1115a9df"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"n", " ", "=", " ", 
+   RowBox[{"Range", "[", "100", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.788340127200596*^9, 3.788340149317333*^9}, 
+   3.788340275640503*^9, {3.7883494866930017`*^9, 3.7883494878207073`*^9}, {
+   3.78835199182412*^9, 3.788351995896687*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"b7afade6-65b0-4697-a0f7-bd5fac9e5b09"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"P", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{"1", "-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"365", "!"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"365", "-", "n"}], ")"}], "!"}], "*", 
+         RowBox[{"365", "^", "n"}]}], ")"}]}], ")"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788352046667346*^9, 3.788352048747864*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"d2436022-7822-4bfb-b1ff-ccb85787f06f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"P", ",", 
+   RowBox[{"PlotStyle", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{"1.`", ",", "0.`", ",", "0.`"}], "]"}]}], ",", 
+   RowBox[{"PlotTheme", "\[Rule]", "\"\<Detailed\>\""}]}], "]"}]], "Input",
+ CellLabel->"In[4]:=",ExpressionUUID->"06d27713-acee-4d8b-865e-562df2a5162b"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{{}, {}, 
+     {RGBColor[1., 0., 0.], PointSize[
+       NCache[
+        Rational[1, 72], 0.013888888888888888`]], AbsoluteThickness[1.6], 
+      LineBox[CompressedData["
+1:eJxVywtQVFUcx/GLWVphEOIjghEQURpAXQJ580OQN7LALrtAkIIsGSIQhSYZ
+G26YVPIowyDFRoJAiSlBIMEACVnEdIp4DUlsrEjEssRo8lDK8X/uTGfmzpnP
+/Z2vWVxKWMISjuP2/Pc9uh8frQf3/wOjRB2H0jQZ/V+OIivRe9LrcrI+jFLy
+aot/yCcb4optQk6ysoS8FuPK2Yqs+jKyMVbHilZOdp0nm6Jf+Znn2WUXyOaw
+Uc1meTs1kC3g9uHJXqG2mWyJwWPcdxP6beRNsLfoO/T87h/JL2HDSf2iFFUn
+2RrClmhF6fFusi3eWLpr6bHNN8lbUN07urfA8mfyVqiWG4+vsuohC1BWWPT3
+Nbtesh083SsiD3n1k1/G/hXpX+uIB8n20PnGvy0+YYjsgI0xoZe60m6RtyHr
++/7Xrrr8TnbE5P76JhPnEbITnGWNDUqBiuwM9cULGqXFH2QXGBzMF7jojZJd
+cSMzZ3PkNLMb+oPbjr7bpSa7I+eL+Pctim+TPbA2NS5B9eoYGdh7QOSz78U7
+jy0HkqxNOwq6yZwnmp5KjXJNH6fdE+aG1qnJen/Svh0Vs7JY1y/J8u0wiH7a
+qWfTBO1eqIw2z0srJ8u9MLZmg+kuo79o98aIOLfwvoIs98apz0X2p2+zfQfi
+5od6mjwmad+B9W7mVR35ZM4HebolrwsG2e4DwYzw8NvGGtp9keT+i3S1lCz3
+ha1Xou6Rj9nuh6jhK3e3NbPdD4NjX52tGmO7PzpWlo8GrZii3R/XFNPcR7Zk
+LgAXu38zvhnI9gBUNXS2ZiawPRARyoDciUy2B0LTc0DzVh7bg5ChbbROOsP2
+IFjNNgWuqmF7MGrWqLY2XGJ7MHL8rv5U0MH2nbA0/zR88Abbd8I1eyqjvY/t
+IXg25nLr4VtsD0FIuZ7KdpTtQpzLGNFZuEOGED0NdeuenGTvhbh33iFRpiW3
+CFF6Jv0DxxnWh6JxOFu34C7rQ2Ewd6I8+x/Wh+Jbm065ySzrQ1Gau16RMsf6
+MDyhPVqimGd9GE57+E7LFlgfBrVg38Z1D1gfBpuY5txaZi4cZpllsHnI+nBM
+VdulHmeWhyPWJk82xNwSjuaRZ+qNFlkvQk67UBLEDBH694zVpzPLRahfkjpQ
+yNwiQvLAdOw5vhfDcEBx6jLfi2FXUll5ne/FSLQsihvgezHeiW/NVPF9BPoc
+f1WM830EuIDdWg3fR0Atf+WFGb6PwMh4ne89vpdAbWZYe5/vJZBUq3Pn+F6C
+geeGNfN8L4EsfnFuge+lqCvb0v6A76WoOXgi6iHfS/Fm6SddvFukOFJcYbLI
+95GQLdONfuR/AROb/Og=
+       "]]}}, 
+    {RGBColor[1., 0., 0.], PointSize[
+      NCache[
+       Rational[1, 72], 0.013888888888888888`]], AbsoluteThickness[1.6]}, {
+     {RGBColor[1., 0., 0.], PointSize[
+       NCache[
+        Rational[1, 72], 0.013888888888888888`]], AbsoluteThickness[
+      1.6]}, {}}, {
+     {RGBColor[1., 0., 0.], PointSize[
+       NCache[
+        Rational[1, 72], 0.013888888888888888`]], AbsoluteThickness[
+      1.6]}, {}}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{None, None},
+  AxesOrigin->{0., 0},
+  DisplayFunction->Identity,
+  Frame->{{True, True}, {True, True}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameStyle->Automatic,
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{Automatic, Automatic},
+  GridLinesStyle->Directive[
+    GrayLevel[0.4, 0.5], 
+    AbsoluteThickness[1], 
+    AbsoluteDashing[{1, 2}]],
+  Method->{
+   "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{0., 100.}, {0, 0.9999996927510721}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.788352059994223*^9},
+ CellLabel->"Out[4]=",ExpressionUUID->"91d751c2-3ea1-46c2-a800-3ee185691e65"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7883401587062674`*^9, 3.788340163466465*^9}, {
+  3.788340261786173*^9, 3.7883402680905113`*^9}, {3.7883519995999937`*^9, 
+  3.788352001560268*^9}},ExpressionUUID->"f134aae8-12b9-4b14-965b-\
+508f50366334"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{
+  3.788352027367786*^9},ExpressionUUID->"e61d8c4a-9c99-45d6-a6fb-\
+e8e1cc52fd23"]
+}, Open  ]]
+},
+WindowSize->{1280, 744},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+FrontEndVersion->"12.0 for Linux x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 212, 4, 99, "Title",ExpressionUUID->"443995c7-a510-43c0-94a1-9f993b642022"],
+Cell[795, 28, 1951, 35, 372, "Text",ExpressionUUID->"ebb92b8e-bf47-408f-8422-1b5c452e3523"],
+Cell[2749, 65, 415, 11, 31, "Input",ExpressionUUID->"6e9cd7d8-1211-4339-b231-3e608445e9fb"],
+Cell[CellGroupData[{
+Cell[3189, 80, 210, 3, 31, "Input",ExpressionUUID->"f91dd302-0f35-40f6-908a-3a5306a9a212"],
+Cell[3402, 85, 276, 9, 50, "Output",ExpressionUUID->"2c4d0dfc-a202-4525-a7ff-728ab3c21c9f"]
+}, Open  ]],
+Cell[3693, 97, 1327, 29, 444, "Text",ExpressionUUID->"a16df5cf-7c9b-4b99-a9f2-07013cc74312"],
+Cell[5023, 128, 484, 13, 31, "Input",ExpressionUUID->"d8322b22-0620-4af8-b271-767595212f0d"],
+Cell[CellGroupData[{
+Cell[5532, 145, 210, 3, 31, "Input",ExpressionUUID->"2df841ed-fac5-4af9-82e2-c8d9fcb83098"],
+Cell[5745, 150, 270, 9, 50, "Output",ExpressionUUID->"8ba547d0-2230-4197-8279-9e4c3f61cf54"]
+}, Open  ]],
+Cell[6030, 162, 343, 8, 60, "Text",ExpressionUUID->"93b1eeeb-b034-4403-8812-c264976a2bf0"],
+Cell[6376, 172, 548, 15, 31, "Input",ExpressionUUID->"ed7013c4-cf25-4956-9c84-1944034198c5"],
+Cell[CellGroupData[{
+Cell[6949, 191, 208, 3, 31, "Input",ExpressionUUID->"73a9c28c-ddd6-448d-bf7c-af74a2172e11"],
+Cell[7160, 196, 270, 9, 50, "Output",ExpressionUUID->"8ac48395-d4b7-41c4-bd2d-b4acf23c5790"]
+}, Open  ]],
+Cell[7445, 208, 2481, 68, 469, "Text",ExpressionUUID->"0a14d98c-620b-46b3-842b-98ab2a725332"],
+Cell[9929, 278, 560, 17, 31, "Input",ExpressionUUID->"e2c59ca3-0614-4e43-8f59-4ef45851f6e0"],
+Cell[CellGroupData[{
+Cell[10514, 299, 210, 3, 31, "Input",ExpressionUUID->"72d725b3-fb90-4fda-a66a-77bfbcafeb97"],
+Cell[10727, 304, 270, 9, 50, "Output",ExpressionUUID->"190bfcca-0ac3-449d-a2a3-48e185ea7e2d"]
+}, Open  ]],
+Cell[11012, 316, 292, 7, 60, "Text",ExpressionUUID->"3d273023-9526-4938-a105-263b6cbdd21c"],
+Cell[11307, 325, 567, 17, 31, "Input",ExpressionUUID->"4c872630-556a-4ff7-b607-069383b3be63"],
+Cell[CellGroupData[{
+Cell[11899, 346, 208, 3, 31, "Input",ExpressionUUID->"bd81f23d-60c5-4065-852c-c16ea93050a4"],
+Cell[12110, 351, 273, 9, 50, "Output",ExpressionUUID->"2ba10104-1189-4508-adfe-997aae290bd4"]
+}, Open  ]],
+Cell[12398, 363, 261, 7, 60, "Text",ExpressionUUID->"0812b1b4-9a22-4176-831d-112ee2a597b7"],
+Cell[12662, 372, 590, 17, 31, "Input",ExpressionUUID->"4aeea704-2346-46c8-b2f6-d02c304e955a"],
+Cell[CellGroupData[{
+Cell[13277, 393, 211, 3, 31, "Input",ExpressionUUID->"eb8a365c-e6b9-4eb5-accd-e89d87d2dcde"],
+Cell[13491, 398, 273, 9, 50, "Output",ExpressionUUID->"a012b896-d2b3-436b-8856-2b79fde0fd67"]
+}, Open  ]],
+Cell[13779, 410, 264, 7, 84, "Text",ExpressionUUID->"77ef729b-77e6-4cb2-8c62-63e19380362f"],
+Cell[14046, 419, 562, 17, 31, "Input",ExpressionUUID->"03cafa6a-5080-4898-8731-a4b2a4fb0ac8"],
+Cell[CellGroupData[{
+Cell[14633, 440, 211, 3, 31, "Input",ExpressionUUID->"8f0c4c32-5c53-4ea0-9b0d-81b097939886"],
+Cell[14847, 445, 271, 9, 50, "Output",ExpressionUUID->"fd05fe0d-66f1-46cd-8118-c4fc6dd8e3e0"]
+}, Open  ]],
+Cell[15133, 457, 290, 8, 84, "Text",ExpressionUUID->"1cca964b-e15c-46c7-b862-588de81d8828"],
+Cell[15426, 467, 565, 17, 31, "Input",ExpressionUUID->"77e8ff75-7429-4885-9cf3-9844b75c08c4"],
+Cell[CellGroupData[{
+Cell[16016, 488, 211, 3, 31, "Input",ExpressionUUID->"cf94f395-a998-477d-9096-790f19098699"],
+Cell[16230, 493, 270, 9, 50, "Output",ExpressionUUID->"3c16e06d-d866-4fed-bb52-60d7f24c712a"]
+}, Open  ]],
+Cell[16515, 505, 212, 4, 36, "Text",ExpressionUUID->"8900538f-250a-4627-86df-964a822a03b6"],
+Cell[16730, 511, 477, 9, 36, "Text",ExpressionUUID->"f00271d0-6ffa-4452-a759-ac0376615241"],
+Cell[17210, 522, 381, 7, 31, "Input",ExpressionUUID->"e39c09db-60ac-4ccc-b924-9592b8c217a2"],
+Cell[17594, 531, 535, 16, 31, "Input",ExpressionUUID->"afde32fa-c513-49f0-861e-f0d24d08fb1c"],
+Cell[CellGroupData[{
+Cell[18154, 551, 346, 7, 31, "Input",ExpressionUUID->"a488549d-64be-4c59-a216-28a369a85aca"],
+Cell[18503, 560, 3173, 75, 244, "Output",ExpressionUUID->"8840ef3a-f6b2-4af1-ab2d-5ed18a4659d6"]
+}, Open  ]],
+Cell[21691, 638, 253, 4, 31, "Input",ExpressionUUID->"c6e9daca-1dcd-4695-bc81-af21051b1d35"],
+Cell[21947, 644, 128, 3, 31, "Input",ExpressionUUID->"abc7a13a-1c08-4398-b32e-598505c2c528"]
+}, Open  ]]
+}
+]
+*)
+
